@@ -1,5 +1,4 @@
 .hero{
-    height: 100vh;
     background: linear-gradient(180deg,#fde1ff,#e1ffea22 60%);
     display: flex;
 }
@@ -49,6 +48,7 @@
     color: white;
     font-size: 22px;
     font-weight: 500;
+    cursor: pointer;
 }
 
 .hero-right{
@@ -59,6 +59,6 @@
 }
 
 .hero-right img{
-    width: 450px;
-    height: 600px;
+    width: 550px;
+    height: 700px;
 }
