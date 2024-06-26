@@ -1,8 +1,12 @@
 const express = require("express");
 const app = express();
+const mongoose = require("mongoose");
 const port = process.env.PORT || 4000;
 
 app.use(express.json());
+
+// Database Connection With MongoDB
+mongoose.connect("mongodb+srv://Admin:Admin1234@cluster0.rs8vbow.mongodb.net/e-commerce");
 
 // Schema for creating user model
 const Users = mongoose.model("Users", {
