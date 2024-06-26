@@ -1,36 +1,57 @@
-import React, { createContext, useState } from "react";
-import all_product from '../Components/Assets/all_product'
+import React, { createContext, useEffect, useState } from "react";
 
 export const ShopContext = createContext(null);
 
-const getDefaultCart = () => {
-    let cart = {};
-    for(let i = 0 ; i < all_product.length+1 ; i++){
-        cart[i] = 0;
-    }
-    return cart;
-}
-
 const ShopContextProvider = (props) => {
 
-    const [cartItems,setCartItems] = useState(getDefaultCart);
-    
-    const addToCart = (itemId) => {
-        setCartItems((prev) => ({...prev, [itemId]:prev[itemId]+1}))
-        console.log(cartItems);
+  const [products, setProducts] = useState([]);
+
+  const getDefaultCart = () => {
+    let cart = {};
+    for (let i = 0; i < 300; i++) {
+      cart[i] = 0;
     }
-    
-    const removeFromCart = (itemId) => {
-        setCartItems((prev) => ({...prev, [itemId]:prev[itemId]-1}))
+    return cart;
+  };
+
+  const [cartItems, setCartItems] = useState(getDefaultCart());
+
+
+  const getTotalCartAmount = () => {
+    let totalAmount = 0;
+    for (const item in cartItems) {
+      if (cartItems[item] > 0) {
+        try {
+          let itemInfo = products.find((product) => product.id === Number(item));
+          totalAmount += cartItems[item] * itemInfo.new_price;
+        } catch (error) {}
+      }
     }
-    
-    const contextValue = {all_product,cartItems,addToCart,removeFromCart};
+    return totalAmount;
+  };
 
-   
+  const getTotalCartItems = () => {
+    let totalItem = 0;
+    for (const item in cartItems) {
+      if (cartItems[item] > 0) {
+        try {
+          let itemInfo = products.find((product) => product.id === Number(item));
+          totalItem += itemInfo ? cartItems[item] : 0 ;
+        } catch (error) {}
+      }
+    }
+    return totalItem;
+  };
 
-    return (
-        <ShopContext.Provider value={contextValue}>{props.children}</ShopContext.Provider>
-    )
-}
 
-export default ShopContextProvider
+
+
+  const contextValue = { products, getTotalCartItems, cartItems, getTotalCartAmount };
+  return (
+    <ShopContext.Provider value={contextValue}>
+      {props.children}
+    </ShopContext.Provider>
+  );
+};
+
+export default ShopContextProvider;
