@@ -5,8 +5,8 @@ import star_dull_icon from "../Assets/star_dull_icon.png";
 import { ShopContext } from "../../Context/ShopContext";
 import { backend_url, currency } from "../../App";
 
-const ProductDisplay = (props) => {
-  const { product } = props;
+const ProductDisplay = ({product}) => {
+
   const { addToCart } = useContext(ShopContext);
 
   return (
@@ -38,10 +38,10 @@ const ProductDisplay = (props) => {
         </div>
         <div className="productdisplay-right-prices">
           <div className="productdisplay-right-price-old">
-            ${product.old_price}
+            {currency}{product.old_price}
           </div>
           <div className="productdisplay-right-price-new">
-            ${product.new_price}
+            {currency}{product.new_price}
           </div>
         </div>
         <div className="productdisplay-right-description">
